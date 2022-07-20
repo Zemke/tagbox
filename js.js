@@ -9,5 +9,17 @@ class TagBox extends HTMLElement {
   }
 }
 
-customElements.define('tag-box', TagBox);
+customElements.define('zemke-tag-box', TagBox);
+
+customElements.define('zemke-tag-box-suggs', class Suggestions extends HTMLElement {
+  constructor() {
+    super();
+  }
+});
+
+customElements.define('zemke-tag-box-sugg', class Suggestion extends HTMLElement {
+  constructor() {
+    super();
+  }
+});
 
