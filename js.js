@@ -287,7 +287,7 @@ class TagBox extends HTMLElement {
       const {paddingLeft, paddingRight} = window.getComputedStyle(this.chatInputEl.nativeElement);
       this.paddingLeft = parseFloat(paddingLeft);
       this.offsetsEl.nativeElement.style.width =
-          width - this.paddingLeft - parseFloat(paddingRight) + 'px';
+        width - this.paddingLeft - parseFloat(paddingRight) + 'px';
       this.offsetsEl.nativeElement.style.marginLeft = paddingLeft;
       this.offsetsEl.nativeElement.style.marginRight = paddingRight;
       this.offsetsEl.nativeElement.style.height = height + 'px';
