@@ -381,7 +381,7 @@ class TagBox extends HTMLElement {
       this.tags = matches.map(m => ({
           user: m.user,
           style: {
-              width: this.getOffset('@' + m.user.username) + 'px',
+              width: this.getOffset(value.substring(m.index, m.index + m.user.username.length + 1)) + 'px',
               left: (this.getOffset(value.substring(0, m.index)) - scrollLeft) + 'px',
           }
       }));
