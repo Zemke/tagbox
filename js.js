@@ -132,22 +132,32 @@ class TagBox extends HTMLElement {
     return this.wrap('offsets');
   }
 
-  set suggestions(vv) {
-    if (vv == null || vv.length < 1) {
-      this.getElementsByTagName('zemke-tag-box-suggs').innerHTML = '';
-    } else {
-      console.log('TODO set suggestions to', vv);
-    }
-  }
-
   get suggestions() {
-    const elems = this.getElementsByTagName('zemke-tag-box-suggs');
-    if (elems > 0) throw new Error('more than one zemke-tag-box-suggs');
-    return Array.from(elems[0].children).map(child => ({
+    return Array.from(this.suggsEl.children).map(child => ({
       // TODO rename to label and value
       username: child.textContent,
       id: child.getAttribute('value'),
     }));
+  }
+
+  get suggsEl() {
+    const elems = this.getElementsByTagName('zemke-tag-box-suggs');
+    if (elems > 0) throw new Error('more than one zemke-tag-box-suggs');
+    return elems[0];
+  }
+
+  set suggestions(vv) {
+    let html = '';
+    if (vv == null) {
+      this.suggsEl.style.display = 'none';
+    } else {
+      for (const v of vv) {
+        html += `<zemke-tag-box-sugg value="${v.id}">${v.username}</zemke-tag-box-sugg>`;
+      }
+      this.suggsEl.style.display = 'block';
+    }
+    console.log(html);
+    this.suggsEl.innerHTML = html;
   }
 
   wrap(id) {
@@ -313,12 +323,16 @@ class TagBox extends HTMLElement {
       this.styleDropdownEl(q,v);
 
       this.suggestions = this.allSuggestions
-          .filter(({username}) => username.toLowerCase().startsWith(q.toLowerCase()))
-          .slice(0, this.suggestionsSlice);
+        .filter(({username}) => username.toLowerCase().startsWith(q.toLowerCase()))
+        .slice(0, this.suggestionsSlice);
+      console.log(this.suggestions);
 
-      if (!this.lazyLoadedSuggestions && !this.lazyLoadingSuggestions) {
-          this.lazyLoadAllSuggestions().then(this.suggest.bind(this));
-      }
+
+      // TODO suggestions are always loaded since there's no laziness anymore,
+      // basically dropping support for lazy loading
+      //if (!this.lazyLoadedSuggestions && !this.lazyLoadingSuggestions) {
+      //    this.lazyLoadAllSuggestions().then(this.suggest.bind(this));
+      //}
   }
 
   lazyLoadAllSuggestions() {
