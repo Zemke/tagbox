@@ -281,7 +281,6 @@ class TagBox extends HTMLElement {
       for (const m of matchAll) {
            let user = this.allSuggestions.find(u => u.username.toLowerCase() === m[1].toLowerCase());
            if (user == null) {
-               await this.lazyLoadAllSuggestions();
                // TODO double houble
                user = this.allSuggestions.find(u => u.username.toLowerCase() === m[1].toLowerCase());
            }
