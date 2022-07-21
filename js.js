@@ -23,8 +23,6 @@ class TagBox extends HTMLElement {
 
     authUser = null;
     allSuggestions = null;
-    lazyLoadedSuggestions = false;
-    lazyLoadingSuggestions = false;
     lazySuggestionsResolver = null;
     lazySuggestionsPromise = null;
     paddingLeft = null;
@@ -94,14 +92,14 @@ class TagBox extends HTMLElement {
   <div class="dropdown-menu suggestions p-0 overflow-hidden"
        #dropdown [class.show]="suggestions">
     <small class="form-text text-muted mx-2"
-           *ngIf="!suggestions?.length && !lazyLoadingSuggestions">No such user.</small>
+           *ngIf="!suggestions?.length">No such user.</small>
     <button *ngFor="let sugg of suggestions; let first = first;"
             #suggestions
             class="dropdown-item px-2" [class.active]="first"
             type="button" [value]="sugg.id" (click)="complete(sugg, true)">
       {{ sugg.username }}
     </button>
-    <img *ngIf="lazyLoadingSuggestions && suggestions?.length < suggestionsSlice"
+    <img *ngIf="suggestions?.length < suggestionsSlice"
          class="mx-2"
          src="../../img/loading.gif"/>
   </div>
@@ -323,32 +321,6 @@ class TagBox extends HTMLElement {
     this.suggestions = this.allSuggestions
       .filter(({username}) => username.toLowerCase().startsWith(q.toLowerCase()))
       .slice(0, this.suggestionsSlice);
-    if (!this.lazyLoadedSuggestions && !this.lazyLoadingSuggestions) {
-      this.lazyLoadAllSuggestions().then(this.suggest.bind(this));
-    }
-  }
-
-  lazyLoadAllSuggestions() {
-      // TODO makes sense?
-      this.lazyLoadedSuggestions = true
-      this.lazyLoadingSuggestions = false;
-      return Promise.resolve(this.allSuggestions);
-      /*
-      if (this.lazyLoadedSuggestions) return Promise.resolve();
-      if (this.lazyLoadingSuggestions) {
-          return this.lazySuggestionsPromise;
-      }
-      this.lazyLoadingSuggestions = true;
-      return this.requestService.get<UserMinimalDto[]>("user", {minimal: "true"}).toPromise()
-          .then(users => this.allSuggestions.push(
-              ...users.filter(user =>
-                  !this.allSuggestions.map(u => u.id).includes(user.id) && user.id !== this.authUser.id)))
-          .then(() => this.lazySuggestionsResolver())
-          .finally(() => {
-              this.lazyLoadedSuggestions = true
-              this.lazyLoadingSuggestions = false;
-          });
-      */
   }
 
   /**
