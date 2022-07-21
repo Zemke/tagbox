@@ -328,15 +328,15 @@ class TagBox extends HTMLElement {
       console.log(this.suggestions);
 
 
-      // TODO suggestions are always loaded since there's no laziness anymore,
-      // basically dropping support for lazy loading
-      //if (!this.lazyLoadedSuggestions && !this.lazyLoadingSuggestions) {
-      //    this.lazyLoadAllSuggestions().then(this.suggest.bind(this));
-      //}
+      if (!this.lazyLoadedSuggestions && !this.lazyLoadingSuggestions) {
+          this.lazyLoadAllSuggestions().then(this.suggest.bind(this));
+      }
   }
 
   lazyLoadAllSuggestions() {
       // TODO makes sense?
+      this.lazyLoadedSuggestions = true
+      this.lazyLoadingSuggestions = false;
       return Promise.resolve(this.allSuggestions);
       /*
       if (this.lazyLoadedSuggestions) return Promise.resolve();
