@@ -223,7 +223,6 @@ class TagBox extends HTMLElement {
       const style = Object.keys(tag.style).map(k => k + `: ${tag.style[k]}`).join('; ');
       html += `<div class="offset" style="${style}" data-id="${tag.user.id}"></div>`;
     }
-    console.log(html);
     this.offsetsEl.nativeElement.innerHTML = html;
   }
 
@@ -233,7 +232,6 @@ class TagBox extends HTMLElement {
 
   connectedCallback() {
     setTimeout(() => {
-      console.log(this.suggestions);
       this.allSuggestions = [...this.suggestions];
       this.styleOffsetsEl();
       this.styleDummyEl();
