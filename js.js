@@ -88,9 +88,9 @@ class TagBox extends HTMLElement {
          [attr.data-username]="tag.user.username">
     </div>
   </div>
-  <div #dummy class="dummy d-inline"></div>
+  <div id="dummy" class="dummy d-inline"></div>
   <div class="dropdown-menu suggestions p-0 overflow-hidden"
-       #dropdown [class.show]="suggestions">
+       id="dropdown" [class.show]="suggestions">
     <small class="form-text text-muted mx-2"
            *ngIf="!suggestions?.length">No such user.</small>
     <button *ngFor="let sugg of suggestions; let first = first;"
@@ -128,6 +128,14 @@ class TagBox extends HTMLElement {
 
   get offsetsEl() {
     return this.wrap('offsets');
+  }
+
+  get dropdownEl() {
+    return this.wrap('dropdown');
+  }
+
+  get dummyEl() {
+    return this.wrap('dummy');
   }
 
   get suggestions() {
