@@ -65,8 +65,8 @@ class TagBox extends HTMLElement {
     background-color: rgba(99, 1, 45, 0.35);
     pointer-events: none;
     position: absolute;
-    top: .5rem;
-    bottom: .5rem;
+    top: .2rem;
+    bottom: .2rem;
     z-index: 99;
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
