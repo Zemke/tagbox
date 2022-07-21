@@ -17,7 +17,6 @@ class TagBox extends HTMLElement {
 
     // suggestions = null; has getter
     recipients = [];
-    tags = [];
     disabled = false;
     suggestionsSlice = 4;
 
@@ -212,6 +211,23 @@ class TagBox extends HTMLElement {
       dropdownEl.classList.add('show');
     }
     dropdownEl.innerHTML = html;
+  }
+
+  get tags() {
+    return Array.from(this.offsetsEl.nativeElement.children).map(child => ({
+      style: '',
+      user: this.allSuggestions.find(s => s.id === child.dataset.id),
+    }));
+  }
+
+  set tags(tags) {
+    let html = '';
+    for (const tag of tags) {
+      const style = Object.keys(tag.style).map(k => k + `: ${tag.style[k]}`).join('; ');
+      html += `<div class="offset" style="${style}" data-id="${tag.user.id}"></div>`;
+    }
+    console.log(html);
+    this.offsetsEl.nativeElement.innerHTML = html;
   }
 
   wrap(id) {
