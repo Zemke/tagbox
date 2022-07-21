@@ -384,7 +384,7 @@ class TagBox extends HTMLElement {
           user: m.user,
           style: {
               width: this.getOffset('@' + m.user.username) + 'px',
-              left: `${this.getOffset(value.substring(0, m.index))-this.paddingLeft-scrollLeft}px`,
+              left: (this.getOffset(value.substring(0, m.index)) - scrollLeft) + 'px',
           }
       }));
   }
