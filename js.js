@@ -74,6 +74,51 @@ class TagBox extends HTMLElement {
     border-top-right-radius: .5rem;
     border-bottom-right-radius: .5rem;
   }
+  #dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    min-width: auto;
+    background-clip: border-box;
+    box-shadow: .4rem .9rem 1.5rem #000;
+  }
+  #dropdown.show {
+    display: block;
+  }
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: .25rem 1.5rem;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+  }
+  .dropdown-item.active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #322a21;
+  }
 </style>
 
 <div class="chat-container">
@@ -89,8 +134,7 @@ class TagBox extends HTMLElement {
     </div>
   </div>
   <div id="dummy" class="dummy d-inline"></div>
-  <div class="dropdown-menu suggestions p-0 overflow-hidden"
-       id="dropdown" [class.show]="suggestions">
+  <div id="dropdown" [class.show]="suggestions">
     <small class="form-text text-muted mx-2"
            *ngIf="!suggestions?.length">No such user.</small>
     <button *ngFor="let sugg of suggestions; let first = first;"
@@ -99,9 +143,6 @@ class TagBox extends HTMLElement {
             type="button" [value]="sugg.id" (click)="complete(sugg, true)">
       {{ sugg.username }}
     </button>
-    <img *ngIf="suggestions?.length < suggestionsSlice"
-         class="mx-2"
-         src="../../img/loading.gif"/>
   </div>
 </div>
 `
@@ -152,18 +193,25 @@ class TagBox extends HTMLElement {
     return elems[0];
   }
 
-  set suggestions(vv) {
+  set suggestions(suggs) {
     let html = '';
-    if (vv == null) {
-      this.suggsEl.style.display = 'none';
+    if (suggs == null) {
+      this.dropdownEl.nativeElement.classList.remove('show');
     } else {
-      for (const v of vv) {
-        html += `<zemke-tag-box-sugg value="${v.id}">${v.username}</zemke-tag-box-sugg>`;
+      for (const sugg of suggs) {
+        // TODO onclick="complete()"
+        html += `
+          <button class="dropdown-item"
+                  type="button"
+                  value="${sugg.id}">
+            ${sugg.username}
+          </button>
+        `;
       }
-      this.suggsEl.style.display = 'block';
+      this.dropdownEl.nativeElement.classList.add('show');
     }
     console.log(html);
-    this.suggsEl.innerHTML = html;
+    this.dropdownEl.nativeElement.innerHTML = html;
   }
 
   wrap(id) {
