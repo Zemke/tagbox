@@ -367,24 +367,23 @@ class TagBox extends HTMLElement {
   }
 
   updateRecipients() {
-      const {value, scrollLeft} = this.chatInputEl.nativeElement;
-      const matchAll = Array.from(value.matchAll(/(?:^|[^a-z0-9-_])@([a-z0-9-_]+)/ig));
-      const matches = [];
-      for (const m of matchAll) {
-           const user = this.allSuggestions.find(u => u.username.toLowerCase() === m[1].toLowerCase());
-           if (user != null) {
-               matches.push({ index: m.index + m[0].indexOf('@'), user });
-           }
+    const {value, scrollLeft} = this.chatInputEl.nativeElement;
+    const matchAll = Array.from(value.matchAll(/(?:^|[^a-z0-9-_])@([a-z0-9-_]+)/ig));
+    const matches = [];
+    for (const m of matchAll) {
+       const user = this.allSuggestions.find(u => u.username.toLowerCase() === m[1].toLowerCase());
+       if (user != null) {
+         matches.push({ index: m.index + m[0].indexOf('@'), user });
+       }
+    }
+    this.recipients = matches.map(({user}) => user).filter((v,i,a) => a.indexOf(v) === i);
+    this.tags = matches.map(m => ({
+      user: m.user,
+      style: {
+        width: this.getOffset(value.substring(m.index, m.index + m.user.username.length + 1)) + 'px',
+        left: (this.getOffset(value.substring(0, m.index)) - scrollLeft) + 'px',
       }
-
-      this.recipients = matches.map(({user}) => user).filter((v,i,a) => a.indexOf(v) === i);
-      this.tags = matches.map(m => ({
-          user: m.user,
-          style: {
-              width: this.getOffset(value.substring(m.index, m.index + m.user.username.length + 1)) + 'px',
-              left: (this.getOffset(value.substring(0, m.index)) - scrollLeft) + 'px',
-          }
-      }));
+    }));
   }
 
   getOffset(v) {
