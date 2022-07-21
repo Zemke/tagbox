@@ -368,16 +368,12 @@ class TagBox extends HTMLElement {
       setTimeout(() => this.updateRecipients());
   }
 
-  async updateRecipients() {
+  updateRecipients() {
       const {value, scrollLeft} = this.chatInputEl.nativeElement;
       const matchAll = Array.from(value.matchAll(/(?:^|[^a-z0-9-_])@([a-z0-9-_]+)/ig));
       const matches = [];
       for (const m of matchAll) {
-           let user = this.allSuggestions.find(u => u.username.toLowerCase() === m[1].toLowerCase());
-           if (user == null) {
-               // TODO double houble
-               user = this.allSuggestions.find(u => u.username.toLowerCase() === m[1].toLowerCase());
-           }
+           const user = this.allSuggestions.find(u => u.username.toLowerCase() === m[1].toLowerCase());
            if (user != null) {
                matches.push({ index: m.index + m[0].indexOf('@'), user });
            }
