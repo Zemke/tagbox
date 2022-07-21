@@ -235,6 +235,31 @@ class TagBox extends HTMLElement {
     setTimeout(() => {
       console.log(this.suggestions);
       this.allSuggestions = [...this.suggestions];
+      this.styleOffsetsEl();
+      this.styleDummyEl();
+
+      // TODO remove on destroy
+      document.addEventListener('click', this.documentClickListener);
+
+      this.resizeObserver = new ResizeObserver(() => {
+        window.requestAnimationFrame(() => {
+          this.updateRecipients();
+          this.styleOffsetsEl();
+          this.styleDummyEl();
+          this.styleDropdownEl();
+        });
+      });
+      this.resizeObserver.observe(this.chatInputEl.nativeElement);
+      // TODO remove ResizeObserver on destroy
+
+      setInterval(() => {
+        const scrollLeft = this.chatInputEl.nativeElement.scrollLeft;
+        if (scrollLeft === this.scrollLeft) return;
+        window.requestAnimationFrame(() => {
+          this.updateRecipients();
+          this.scrollLeft = scrollLeft;
+        });
+      });
     });
   }
 
