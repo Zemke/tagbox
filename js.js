@@ -147,17 +147,14 @@ class TagBox extends HTMLElement {
 `
 
     shadow.getElementById('chatInput').addEventListener('keydown', e => {
-      console.log(e.type);
       this.onKeydown(e);
     });
 
     shadow.getElementById('chatInput').addEventListener('keyup', e => {
-      console.log(e.type);
       this.onKeyup(e);
     });
 
     shadow.getElementById('chatInput').addEventListener('input', e => {
-      console.log(e.type);
       this.onInput(e);
     });
   }
