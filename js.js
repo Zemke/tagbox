@@ -314,23 +314,18 @@ class TagBox extends HTMLElement {
   }
 
   suggest() {
-      const [q, v,] = this.getProc();
-      if (q == null) {
-          this.suggestions = null;
-          return;
-      }
-
-      this.styleDropdownEl(q,v);
-
-      this.suggestions = this.allSuggestions
-        .filter(({username}) => username.toLowerCase().startsWith(q.toLowerCase()))
-        .slice(0, this.suggestionsSlice);
-      console.log(this.suggestions);
-
-
-      if (!this.lazyLoadedSuggestions && !this.lazyLoadingSuggestions) {
-          this.lazyLoadAllSuggestions().then(this.suggest.bind(this));
-      }
+    const [q, v,] = this.getProc();
+    if (q == null) {
+      this.suggestions = null;
+      return;
+    }
+    this.styleDropdownEl(q,v);
+    this.suggestions = this.allSuggestions
+      .filter(({username}) => username.toLowerCase().startsWith(q.toLowerCase()))
+      .slice(0, this.suggestionsSlice);
+    if (!this.lazyLoadedSuggestions && !this.lazyLoadingSuggestions) {
+      this.lazyLoadAllSuggestions().then(this.suggest.bind(this));
+    }
   }
 
   lazyLoadAllSuggestions() {
