@@ -194,9 +194,10 @@ class TagBox extends HTMLElement {
   }
 
   set suggestions(suggs) {
+    const {nativeElement: dropdownEl} = this.dropdownEl;
     let html = '';
     if (suggs == null) {
-      this.dropdownEl.nativeElement.classList.remove('show');
+      dropdownEl.classList.remove('show');
     } else {
       for (const sugg of suggs) {
         // TODO onclick="complete()"
@@ -208,10 +209,9 @@ class TagBox extends HTMLElement {
           </button>
         `;
       }
-      this.dropdownEl.nativeElement.classList.add('show');
+      dropdownEl.classList.add('show');
     }
-    console.log(html);
-    this.dropdownEl.nativeElement.innerHTML = html;
+    dropdownEl.innerHTML = html;
   }
 
   wrap(id) {
