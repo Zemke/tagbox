@@ -170,26 +170,26 @@ class TagBox extends HTMLElement {
 
   set suggestions(suggs) {
     const {nativeElement: dropdownEl} = this.dropdownEl;
-    let html = '';
+    dropdownEl.innerHTML = '';
     if (suggs == null) {
       dropdownEl.classList.remove('show');
     } else {
       for (const sugg of suggs) {
-        // TODO onclick="complete()"
-        html += `
-          <button class="dropdown-item"
-                  type="button"
-                  value="${sugg.id}">
-            ${sugg.username}
-          </button>
-        `;
+        const child = document.createElement('button');
+        child.classList.add('dropdown-item');
+        child.setAttribute('type', 'button');
+        child.setAttribute('value', sugg.id);
+        child.textContent = sugg.username;
+        child.addEventListener('click', e => {
+          this.complete(sugg, true);
+        });
+        dropdownEl.appendChild(child);
       }
       dropdownEl.classList.add('show');
+      if (!dropdownEl.children.length) {
+        dropdownEl.children.push('<small>No such user.</small>');
+      }
     }
-    if (html === '') {
-      html = '<small>No such user.</small>';
-    }
-    dropdownEl.innerHTML = html;
   }
 
   get tags() {
