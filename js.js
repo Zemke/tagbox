@@ -219,7 +219,6 @@ class TagBox extends HTMLElement {
       this.styleOffsetsEl();
       this.styleDummyEl();
 
-      // TODO remove on destroy
       document.addEventListener('click', this.documentClickListener);
 
       this.resizeObserver = new ResizeObserver(() => {
@@ -231,7 +230,6 @@ class TagBox extends HTMLElement {
         });
       });
       this.resizeObserver.observe(this.chatInputEl.nativeElement);
-      // TODO remove ResizeObserver on destroy
 
       setInterval(() => {
         const scrollLeft = this.chatInputEl.nativeElement.scrollLeft;
@@ -242,6 +240,11 @@ class TagBox extends HTMLElement {
         });
       });
     });
+  }
+
+  disconnectedCallback() {
+    this.resizeObserver.disconnect();
+    document.removeEventListener('click', this.documentClickListener);
   }
 
   styleOffsetsEl() {
