@@ -187,6 +187,9 @@ class TagBox extends HTMLElement {
       }
       dropdownEl.classList.add('show');
     }
+    if (html === '') {
+      html = '<small>No such user.</small>';
+    }
     dropdownEl.innerHTML = html;
   }
 
@@ -204,7 +207,6 @@ class TagBox extends HTMLElement {
       html += `<div class="offset" style="${style}" data-id="${tag.user.id}"></div>`;
     }
     this.offsetsEl.nativeElement.innerHTML = html;
-    // TODO "no such user found"
   }
 
   // TODO get rid of this (Angular relict)
