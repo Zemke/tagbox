@@ -16,7 +16,6 @@ class TagBox extends HTMLElement {
     */
 
     // suggestions = null; has getter
-    recipients = [];
     disabled = false;
     suggestionsSlice = 4;
 
@@ -245,25 +244,6 @@ class TagBox extends HTMLElement {
     });
   }
 
-  submit() {
-      this.disabled = true;
-      const message = {
-          body: this.chatInputEl.nativeElement.value,
-          recipients: this.recipients,
-          category: this.recipients?.length ? 'PRIVATE' : 'SHOUTBOX',
-      };
-      this.message.emit([message, (success) => {
-          this.disabled = false;
-          if (success) {
-              this.recipients = [];
-              this.tags = [];
-              this.suggestions = null;
-              this.chatInputEl.nativeElement.value = '';
-          }
-          setTimeout(() => this.chatInputEl.nativeElement.focus());
-      }]);
-  }
-
   styleOffsetsEl() {
     const {width, height} = this.chatInputEl.nativeElement.getBoundingClientRect();
     const {paddingLeft, paddingRight} = window.getComputedStyle(this.chatInputEl.nativeElement);
@@ -360,7 +340,6 @@ class TagBox extends HTMLElement {
          matches.push({ index: m.index + m[0].indexOf('@'), user });
        }
     }
-    this.recipients = matches.map(({user}) => user).filter((v,i,a) => a.indexOf(v) === i);
     this.tags = matches.map(m => ({
       user: m.user,
       style: {
