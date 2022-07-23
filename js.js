@@ -156,9 +156,8 @@ class TagBox extends HTMLElement {
 
   get suggestions() {
     return Array.from(this.suggsEl.children).map(child => ({
-      // TODO rename to label and value
-      username: child.textContent,
-      id: child.getAttribute('value'),
+      label: child.textContent,
+      value: child.getAttribute('value'),
     }));
   }
 
@@ -178,8 +177,8 @@ class TagBox extends HTMLElement {
         const child = document.createElement('button');
         child.classList.add('dropdown-item');
         child.setAttribute('type', 'button');
-        child.setAttribute('value', sugg.id);
-        child.textContent = sugg.username;
+        child.setAttribute('value', sugg.value);
+        child.textContent = sugg.label;
         child.addEventListener('click', e => {
           this.complete(sugg, true);
         });
@@ -195,7 +194,7 @@ class TagBox extends HTMLElement {
   get tags() {
     return Array.from(this.offsetsEl.nativeElement.children).map(child => ({
       style: '',
-      user: this.allSuggestions.find(s => s.id === child.dataset.id),
+      user: this.allSuggestions.find(s => s.value === child.dataset.value),
     }));
   }
 
@@ -203,7 +202,7 @@ class TagBox extends HTMLElement {
     let html = '';
     for (const tag of tags) {
       const style = Object.keys(tag.style).map(k => k + `: ${tag.style[k]}`).join('; ');
-      html += `<div class="offset" style="${style}" data-id="${tag.user.id}"></div>`;
+      html += `<div class="offset" style="${style}" data-value="${tag.user.value}"></div>`;
     }
     this.offsetsEl.nativeElement.innerHTML = html;
   }
@@ -280,11 +279,11 @@ class TagBox extends HTMLElement {
     const [q, v, caret] = this.getProc();
     inpElem.value =
       v.substring(0, caret - q.length)
-      + user.username
+      + user.label
       + inpElem.value.substring(caret);
     this.suggestions = null;
     fromClick && inpElem.focus();
-    inpElem.selectionStart = caret - q.length + user.username.length;
+    inpElem.selectionStart = caret - q.length + user.label.length;
     inpElem.selectionEnd = inpElem.selectionStart;
     this.updateRecipients();
   }
@@ -302,7 +301,7 @@ class TagBox extends HTMLElement {
               }
           }
           if (key === 'Enter') {
-              const user = this.suggestions.find(x => x.id == buttons[active].value);
+              const user = this.suggestions.find(x => x.value == buttons[active].value);
               if (user == null) return;
               this.complete(user);
           } else {
@@ -338,7 +337,7 @@ class TagBox extends HTMLElement {
     const matchAll = Array.from(value.matchAll(/(?:^|[^a-z0-9-_])@([a-z0-9-_]+)/ig));
     const matches = [];
     for (const m of matchAll) {
-       const user = this.allSuggestions.find(u => u.username.toLowerCase() === m[1].toLowerCase());
+       const user = this.allSuggestions.find(u => u.label.toLowerCase() === m[1].toLowerCase());
        if (user != null) {
          matches.push({ index: m.index + m[0].indexOf('@'), user });
        }
@@ -346,7 +345,7 @@ class TagBox extends HTMLElement {
     this.tags = matches.map(m => ({
       user: m.user,
       style: {
-        width: this.getOffset(value.substring(m.index, m.index + m.user.username.length + 1)) + 'px',
+        width: this.getOffset(value.substring(m.index, m.index + m.user.label.length + 1)) + 'px',
         left: (this.getOffset(value.substring(0, m.index)) - scrollLeft) + 'px',
       }
     }));
@@ -370,7 +369,7 @@ class TagBox extends HTMLElement {
     }
     this.styleDropdownEl(q,v);
     this.suggestions = this.allSuggestions
-      .filter(({username}) => username.toLowerCase().startsWith(q.toLowerCase()))
+      .filter(({label}) => label.toLowerCase().startsWith(q.toLowerCase()))
       .slice(0, this.suggestionsSlice);
   }
 
