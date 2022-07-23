@@ -267,6 +267,7 @@ class TagBox extends HTMLElement {
 
   onKeydown(e) {
       const key = e.key === 'Unidentified' ? String.fromCharCode(e.which) : e.key;
+      // TODO arrow navigation
       if (this.suggestions?.length && ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
           e.preventDefault();
           const buttons = Array.from(this.suggestionsEl).map(el => el);
