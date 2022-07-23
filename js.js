@@ -1,6 +1,7 @@
 class TagBox extends HTMLElement {
 
     static DELIMITER = /^[a-z0-9-_]*$/i;
+    static DEFAULT_SLICE = 4;
 
     /*
     message = new EventEmitter();
@@ -17,7 +18,6 @@ class TagBox extends HTMLElement {
 
     // suggestions = null; has getter
     disabled = false;
-    suggestionsSlice = 4;
 
     authUser = null;
     allSuggestions = null;
@@ -212,6 +212,7 @@ class TagBox extends HTMLElement {
 
   connectedCallback() {
     setTimeout(() => {
+      this.suggestionsSlice = parseInt(this.getAttribute('length')) || TagBox.DEFAULT_SLICE;
       this.allSuggestions = [...this.suggestions];
       this.styleOffsetsEl();
       this.styleDummyEl();
