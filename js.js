@@ -27,7 +27,7 @@ class TagBox extends HTMLElement {
     resizeObserver = null;
     scrollLeft = 0;
     documentClickListener = e => {
-        e.target === this.chatInputEl.nativeElement
+        e.target === this.chatInputEl
             ? this.suggest()
             : (this.suggestions = null);
     }
@@ -139,19 +139,19 @@ class TagBox extends HTMLElement {
   }
 
   get chatInputEl() {
-    return this.wrap('chatInput');
+    return this.getEl('chatInput');
   }
 
   get offsetsEl() {
-    return this.wrap('offsets');
+    return this.getEl('offsets');
   }
 
   get dropdownEl() {
-    return this.wrap('dropdown');
+    return this.getEl('dropdown');
   }
 
   get dummyEl() {
-    return this.wrap('dummy');
+    return this.getEl('dummy');
   }
 
   get suggestions() {
@@ -168,10 +168,9 @@ class TagBox extends HTMLElement {
   }
 
   set suggestions(suggs) {
-    const {nativeElement: dropdownEl} = this.dropdownEl;
-    dropdownEl.innerHTML = '';
+    this.dropdownEl.innerHTML = '';
     if (suggs == null) {
-      dropdownEl.classList.remove('show');
+      this.dropdownEl.classList.remove('show');
     } else {
       for (const sugg of suggs) {
         const child = document.createElement('button');
@@ -182,17 +181,17 @@ class TagBox extends HTMLElement {
         child.addEventListener('click', e => {
           this.complete(sugg, true);
         });
-        dropdownEl.appendChild(child);
+        this.dropdownEl.appendChild(child);
       }
-      dropdownEl.classList.add('show');
-      if (!dropdownEl.children.length) {
-        dropdownEl.children.push('<small>No such user.</small>');
+      this.dropdownEl.classList.add('show');
+      if (!this.dropdownEl.children.length) {
+        this.dropdownEl.children.push('<small>No such user.</small>');
       }
     }
   }
 
   get tags() {
-    return Array.from(this.offsetsEl.nativeElement.children).map(child => ({
+    return Array.from(this.offsetsEl.children).map(child => ({
       style: '',
       user: this.allSuggestions.find(s => s.value === child.dataset.value),
     }));
@@ -204,12 +203,11 @@ class TagBox extends HTMLElement {
       const style = Object.keys(tag.style).map(k => k + `: ${tag.style[k]}`).join('; ');
       html += `<div class="offset" style="${style}" data-value="${tag.user.value}"></div>`;
     }
-    this.offsetsEl.nativeElement.innerHTML = html;
+    this.offsetsEl.innerHTML = html;
   }
 
-  // TODO get rid of this (Angular relict)
-  wrap(id) {
-    return { 'nativeElement': this.shadowRoot.getElementById(id) };
+  getEl(id) {
+    return this.shadowRoot.getElementById(id);
   }
 
   connectedCallback() {
@@ -228,10 +226,10 @@ class TagBox extends HTMLElement {
           this.styleDropdownEl();
         });
       });
-      this.resizeObserver.observe(this.chatInputEl.nativeElement);
+      this.resizeObserver.observe(this.chatInputEl);
 
       setInterval(() => {
-        const scrollLeft = this.chatInputEl.nativeElement.scrollLeft;
+        const scrollLeft = this.chatInputEl.scrollLeft;
         if (scrollLeft === this.scrollLeft) return;
         window.requestAnimationFrame(() => {
           this.updateRecipients();
@@ -247,35 +245,35 @@ class TagBox extends HTMLElement {
   }
 
   styleOffsetsEl() {
-    const {width, height} = this.chatInputEl.nativeElement.getBoundingClientRect();
-    const {paddingLeft, paddingRight} = window.getComputedStyle(this.chatInputEl.nativeElement);
+    const {width, height} = this.chatInputEl.getBoundingClientRect();
+    const {paddingLeft, paddingRight} = window.getComputedStyle(this.chatInputEl);
     this.paddingLeft = parseFloat(paddingLeft);
-    this.offsetsEl.nativeElement.style.width =
+    this.offsetsEl.style.width =
       width - this.paddingLeft - parseFloat(paddingRight) + 'px';
-    this.offsetsEl.nativeElement.style.marginLeft = paddingLeft;
-    this.offsetsEl.nativeElement.style.marginRight = paddingRight;
-    this.offsetsEl.nativeElement.style.height = height + 'px';
+    this.offsetsEl.style.marginLeft = paddingLeft;
+    this.offsetsEl.style.marginRight = paddingRight;
+    this.offsetsEl.style.height = height + 'px';
   }
 
   styleDummyEl() {
-    const {fontSize, fontFamily} = window.getComputedStyle(this.chatInputEl.nativeElement);
-    this.dummyEl.nativeElement.style.fontSize = fontSize;
-    this.dummyEl.nativeElement.style.fontFamily = fontFamily;
+    const {fontSize, fontFamily} = window.getComputedStyle(this.chatInputEl);
+    this.dummyEl.style.fontSize = fontSize;
+    this.dummyEl.style.fontFamily = fontFamily;
   }
 
   styleDropdownEl(q = null, v = null) {
-    if (this.dropdownEl?.nativeElement == null) return;
+    if (this.dropdownEl == null) return;
     if (q == null || v == null) {
       [q, v] = this.getProc();
     }
     if (q == null || v == null) return;
-    this.dropdownEl.nativeElement.style.left = Math.min(
-      this.getOffset(v.substring(0, v.length-q.length)) - this.chatInputEl.nativeElement.scrollLeft,
+    this.dropdownEl.style.left = Math.min(
+      this.getOffset(v.substring(0, v.length-q.length)) - this.chatInputEl.scrollLeft,
       window.innerWidth - 200) + 'px';
   }
 
   complete(user, fromClick = false) {
-    const inpElem = this.chatInputEl.nativeElement;
+    const inpElem = this.chatInputEl;
     const [q, v, caret] = this.getProc();
     inpElem.value =
       v.substring(0, caret - q.length)
@@ -292,7 +290,7 @@ class TagBox extends HTMLElement {
       const key = e.key === 'Unidentified' ? String.fromCharCode(e.which) : e.key;
       if (this.suggestions?.length && ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
           e.preventDefault();
-          const buttons = Array.from(this.suggestionsEl).map(el => el.nativeElement);
+          const buttons = Array.from(this.suggestionsEl).map(el => el);
           let active;
           for (let i = 0; i < buttons.length; i++) {
               if (buttons[i].classList.contains('active')) {
@@ -333,7 +331,7 @@ class TagBox extends HTMLElement {
   }
 
   updateRecipients() {
-    const {value, scrollLeft} = this.chatInputEl.nativeElement;
+    const {value, scrollLeft} = this.chatInputEl;
     const matchAll = Array.from(value.matchAll(/(?:^|[^a-z0-9-_])@([a-z0-9-_]+)/ig));
     const matches = [];
     for (const m of matchAll) {
@@ -352,12 +350,12 @@ class TagBox extends HTMLElement {
   }
 
   getOffset(v) {
-    this.dummyEl.nativeElement.textContent = v;
-    this.dummyEl.nativeElement.style.paddingLeft = `${this.paddingLeft}px`;
+    this.dummyEl.textContent = v;
+    this.dummyEl.style.paddingLeft = `${this.paddingLeft}px`;
     // scrollLeft is subtracted in the result, it's done here just for visual reasons when debugging
-    this.dummyEl.nativeElement.style.marginLeft = `-${this.chatInputEl.nativeElement.scrollLeft}px`;
-    const res = this.dummyEl.nativeElement.getBoundingClientRect().width;
-    this.dummyEl.nativeElement.innerHTML = '';
+    this.dummyEl.style.marginLeft = `-${this.chatInputEl.scrollLeft}px`;
+    const res = this.dummyEl.getBoundingClientRect().width;
+    this.dummyEl.innerHTML = '';
     return res;
   }
 
@@ -382,7 +380,7 @@ class TagBox extends HTMLElement {
    *   until associated @ sign and the caret index.
    */
   getProc() {
-    const {selectionStart, value} = this.chatInputEl.nativeElement;
+    const {selectionStart, value} = this.chatInputEl;
     const v = value.substring(0, selectionStart);
     if (v.indexOf('@') === -1) return [null, v, selectionStart];
     const rev = v.split("").reverse()
