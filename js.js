@@ -3,28 +3,6 @@ class TagBox extends HTMLElement {
     static DELIMITER = /^[a-z0-9-_]*$/i;
     static DEFAULT_SLICE = 4;
 
-    /*
-    message = new EventEmitter();
-    messages = null;
-    */
-
-    /*
-    chatInputEl = null;
-    dummyEl = null;
-    offsetsEl = null;
-    dropdownEl = null;
-    suggestionsEl = null;
-    */
-
-    // suggestions = null; has getter
-    disabled = false;
-
-    authUser = null;
-    allSuggestions = null;
-    lazySuggestionsResolver = null;
-    lazySuggestionsPromise = null;
-    paddingLeft = null;
-    resizeObserver = null;
     scrollLeft = 0;
     documentClickListener = e => {
         e.target === this.chatInputEl
