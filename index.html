@@ -5,14 +5,24 @@
 </head>
 <body>
 
-<zemke-tag-box>
-  <zemke-tag-box-suggs>
-    <zemke-tag-box-sugg value="1">Zemke</zemke-tag-box-sugg>
-    <zemke-tag-box-sugg value="2">Mablak</zemke-tag-box-sugg>
-    <zemke-tag-box-sugg value="3">Dario</zemke-tag-box-sugg>
-    <zemke-tag-box-sugg value="4">Koras</zemke-tag-box-sugg>
-  </zemke-tag-box-suggs>
-</zemke-tag-box>
+<form name="ex-from">
+  <zemke-tag-box>
+    <input type="text" name="body" required>
+    <select name="tags" multiple>
+      <option value="1">Zemke</option>
+      <option value="2">Mablak</option>
+      <option value="3">Dario</option>
+      <option value="4">Koras</option>
+    </select>
+  </zemke-tag-box>
+  <input type="submit" value="Submit">
+    <select name="tags2" multiple>
+      <option value="1">Zemke</option>
+      <option value="2">Mablak</option>
+      <option value="3">Dario</option>
+      <option value="4">Koras</option>
+    </select>
+</form>
 
 </body>
 </html>

@@ -140,8 +140,18 @@ class TagBox extends HTMLElement {
   }
 
   get suggsEl() {
-    const elems = this.getElementsByTagName('zemke-tag-box-suggs');
-    if (elems > 0) throw new Error('more than one zemke-tag-box-suggs');
+    const elems = this.getElementsByTagName('select');
+    if (elems.length !== 1) {
+      throw new Error('One and only one HTMLSelectElement in zemke-tag-box required');
+    }
+    return elems[0];
+  }
+
+  get valueEl() {
+    const elems = this.getElementsByTagName('input');
+    if (elems.length !== 1) {
+      throw new Error('One and only one HTMLInputElement in zemke-tag-box required');
+    }
     return elems[0];
   }
 
@@ -182,6 +192,9 @@ class TagBox extends HTMLElement {
       html += `<div class="offset" style="${style}" data-value="${tag.user.value}"></div>`;
     }
     this.offsetsEl.innerHTML = html;
+    for (const opt of this.suggsEl.options) {
+      opt.selected = this.tags.map(t => String(t.user.value)).indexOf(String(opt.value)) !== -1;
+    }
   }
 
   getEl(id) {
@@ -306,6 +319,9 @@ class TagBox extends HTMLElement {
   }
 
   onInput() {
+    // TODO double-check if it's right to do it at input event
+    // where does angular's ngModel do it for instance?
+    this.valueEl.value = this.chatInputEl.value;
     this.suggest();
     setTimeout(() => this.updateRecipients());
   }
@@ -376,16 +392,4 @@ class TagBox extends HTMLElement {
 }
 
 customElements.define('zemke-tag-box', TagBox);
-
-customElements.define('zemke-tag-box-suggs', class Suggestions extends HTMLElement {
-  constructor() {
-    super();
-  }
-});
-
-customElements.define('zemke-tag-box-sugg', class Suggestion extends HTMLElement {
-  constructor() {
-    super();
-  }
-});
 
