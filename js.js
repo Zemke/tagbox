@@ -230,6 +230,11 @@ class TagBox extends HTMLElement {
           this.scrollLeft = scrollLeft;
         });
       });
+
+      this.valueEl.addEventListener('input', e => {
+        this.chatInputEl.value = e.target.value;
+        this.onInput();
+      })
     });
   }
 
