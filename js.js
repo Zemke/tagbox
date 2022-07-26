@@ -174,6 +174,8 @@ class TagBox extends HTMLElement {
       this.dropdownEl.classList.add('show');
       if (!this.dropdownEl.children.length) {
         this.dropdownEl.innerHTML = '<small>No such user.</small>';
+      } else {
+        this.dropdownEl.children[0].classList.add('active');
       }
     }
   }
