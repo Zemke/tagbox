@@ -1,14 +1,14 @@
 class TagBox extends HTMLElement {
 
-    static DELIMITER = /^[a-z0-9-_]*$/i;
-    static DEFAULT_SLICE = 4;
+  static DELIMITER = /^[a-z0-9-_]*$/i;
+  static DEFAULT_SLICE = 4;
 
-    scrollLeft = 0;
-    documentClickListener = e => {
-        e.target === this.chatInputEl
-            ? this.suggest()
-            : (this.suggestions = null);
-    }
+  scrollLeft = 0;
+  documentClickListener = e => {
+    e.target === this.chatInputEl
+      ? this.suggest()
+      : (this.suggestions = null);
+  };
 
   constructor() {
     super();
@@ -132,13 +132,6 @@ class TagBox extends HTMLElement {
     return this.getEl('dummy');
   }
 
-  get suggestions() {
-    return Array.from(this.suggsEl.children).map(child => ({
-      label: child.textContent,
-      value: child.getAttribute('value'),
-    }));
-  }
-
   get suggsEl() {
     const elems = this.getElementsByTagName('select');
     if (elems.length !== 1) {
@@ -153,6 +146,13 @@ class TagBox extends HTMLElement {
       throw new Error('One and only one HTMLInputElement in zemke-tag-box required');
     }
     return elems[0];
+  }
+
+  get suggestions() {
+    return Array.from(this.suggsEl.children).map(child => ({
+      label: child.textContent,
+      value: child.getAttribute('value'),
+    }));
   }
 
   set suggestions(suggs) {
@@ -328,10 +328,10 @@ class TagBox extends HTMLElement {
     const matchAll = Array.from(value.matchAll(/(?:^|[^a-z0-9-_])@([a-z0-9-_]+)/ig));
     const matches = [];
     for (const m of matchAll) {
-       const user = this.allSuggestions.find(u => u.label.toLowerCase() === m[1].toLowerCase());
-       if (user != null) {
-         matches.push({ index: m.index + m[0].indexOf('@'), user });
-       }
+      const user = this.allSuggestions.find(u => u.label.toLowerCase() === m[1].toLowerCase());
+      if (user != null) {
+        matches.push({ index: m.index + m[0].indexOf('@'), user });
+      }
     }
     this.tags = matches.map(m => ({
       user: m.user,
