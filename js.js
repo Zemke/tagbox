@@ -99,14 +99,15 @@ class TagBox extends HTMLElement {
       </style>
 
       <div class="chat-container">
-        <input type="text"
+        <input part="input"
+               type="text"
                name="chat-input"
                id="chatInput">
         <div id="offsets" class="offsets">
         </div>
         <div id="dummy" class="dummy">
         </div>
-        <div id="dropdown">
+        <div id="dropdown" part="dropdown-container">
         </div>
       </div>
     `;
@@ -162,6 +163,7 @@ class TagBox extends HTMLElement {
     } else {
       for (const sugg of suggs) {
         const child = document.createElement('button');
+        child.setAttribute('part', 'dropdown-item');
         child.setAttribute('type', 'button');
         child.setAttribute('value', sugg.value);
         child.textContent = sugg.label;
@@ -191,7 +193,7 @@ class TagBox extends HTMLElement {
     let html = '';
     for (const tag of tags) {
       const style = Object.keys(tag.style).map(k => k + `: ${tag.style[k]}`).join('; ');
-      html += `<div class="offset" style="${style}" data-value="${tag.user.value}"></div>`;
+      html += `<div part="offset" class="offset" style="${style}" data-value="${tag.user.value}"></div>`;
     }
     this.offsetsEl.innerHTML = html;
     for (const opt of this.suggsEl.options) {
