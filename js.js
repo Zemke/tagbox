@@ -140,7 +140,6 @@ class TagBox extends HTMLElement {
     return elems[0];
   }
 
-  // TODO listen to changes and update chatInputEl
   get valueEl() {
     const elems = this.getElementsByTagName('input');
     if (elems.length !== 1) {
@@ -173,7 +172,8 @@ class TagBox extends HTMLElement {
       }
       this.dropdownEl.classList.add('show');
       if (!this.dropdownEl.children.length) {
-        this.dropdownEl.innerHTML = '<small>Nothing found.</small>';
+        this.dropdownEl.innerHTML =
+          `<small>${this.getAttribute('nothing') || 'Nothing found.'}</small>`;
       } else {
         this.dropdownEl.children[0].classList.add('active');
       }
