@@ -72,6 +72,9 @@ class TagBox extends HTMLElement {
           background-clip: border-box;
           box-shadow: 0rem 0.3rem 0.8rem rgba(0, 0, 0, .5);
         }
+        #dropdown small {
+          padding: .25rem .4rem;
+        }
         #dropdown.show {
           display: block;
         }
@@ -170,7 +173,7 @@ class TagBox extends HTMLElement {
       }
       this.dropdownEl.classList.add('show');
       if (!this.dropdownEl.children.length) {
-        this.dropdownEl.innerHTML = '<small>No such user.</small>';
+        this.dropdownEl.innerHTML = '<small>Nothing found.</small>';
       } else {
         this.dropdownEl.children[0].classList.add('active');
       }
