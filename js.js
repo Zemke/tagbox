@@ -279,36 +279,35 @@ class TagBox extends HTMLElement {
   }
 
   onKeydown(e) {
-      const key = e.key === 'Unidentified' ? String.fromCharCode(e.which) : e.key;
-      // TODO arrow navigation
-      if (this.suggestions?.length && ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
-          e.preventDefault();
-          const buttons = Array.from(this.suggestionsEl).map(el => el);
-          let active;
-          for (let i = 0; i < buttons.length; i++) {
-              if (buttons[i].classList.contains('active')) {
-                  active = i;
-                  break;
-              }
-          }
-          if (key === 'Enter') {
-              const user = this.suggestions.find(x => x.value == buttons[active].value);
-              if (user == null) return;
-              this.complete(user);
-          } else {
-              if (active == null) {
-                  buttons[0].classList.add('active');
-              } else {
-                  const up = key === 'ArrowUp' || (e.shiftKey && key === 'Tab')
-                  buttons[active].classList.remove('active');
-                  if (up && active == 0) {
-                      buttons[buttons.length-1].classList.add('active');
-                  } else {
-                      buttons[(active + (up ? -1 : +1)) % buttons.length].classList.add('active');
-                  }
-              }
-          }
+    const key = e.key === 'Unidentified' ? String.fromCharCode(e.which) : e.key;
+    if (this.suggestions?.length && ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
+      e.preventDefault();
+      const buttons = Array.from(this.dropdownEl.querySelectorAll('button.dropdown-item'));
+      let active;
+      for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].classList.contains('active')) {
+          active = i;
+          break;
+        }
       }
+      if (key === 'Enter') {
+        const user = this.suggestions.find(x => x.value == buttons[active].value);
+        if (user == null) return;
+        this.complete(user);
+      } else {
+        if (active == null) {
+          buttons[0].classList.add('active');
+        } else {
+          const up = key === 'ArrowUp' || (e.shiftKey && key === 'Tab')
+          buttons[active].classList.remove('active');
+          if (up && active == 0) {
+            buttons[buttons.length-1].classList.add('active');
+          } else {
+            buttons[(active + (up ? -1 : +1)) % buttons.length].classList.add('active');
+          }
+        }
+      }
+    }
   }
 
   onKeyup(e) {
