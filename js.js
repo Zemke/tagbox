@@ -318,8 +318,6 @@ class TagBox extends HTMLElement {
   }
 
   onInput() {
-    // TODO double-check if it's right to do it at input event
-    // where does angular's ngModel do it for instance?
     this.valueEl.value = this.chatInputEl.value;
     this.suggest();
     setTimeout(() => this.updateRecipients());
