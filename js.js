@@ -59,8 +59,6 @@ class TagBox extends HTMLElement {
           z-index: 1000;
           display: none;
           float: left;
-          min-width: 10rem;
-          padding: .5rem 0;
           margin: .125rem 0 0;
           font-size: 1rem;
           color: #212529;
@@ -68,21 +66,19 @@ class TagBox extends HTMLElement {
           list-style: none;
           background-color: #fff;
           background-clip: padding-box;
-          border: 1px solid rgba(0,0,0,.15);
+          overflow: hidden;
           border-radius: .25rem;
           min-width: auto;
           background-clip: border-box;
-          box-shadow: .4rem .9rem 1.5rem #000;
+          box-shadow: 0rem 0.3rem 0.8rem rgba(0, 0, 0, .5);
         }
         #dropdown.show {
           display: block;
         }
-        .dropdown-item {
+        #dropdown button {
           display: block;
           width: 100%;
-          padding: .25rem 1.5rem;
-          padding-right: 1.5rem;
-          padding-left: 1.5rem;
+          padding: .25rem .4rem;
           clear: both;
           font-weight: 400;
           color: #212529;
@@ -91,10 +87,11 @@ class TagBox extends HTMLElement {
           background-color: transparent;
           border: 0;
         }
-        .dropdown-item.active {
-          color: #fff;
+        #dropdown:not(:hover) button.active,
+        #dropdown button:hover {
           text-decoration: none;
-          background-color: #322a21;
+          background-color: #ccc;
+          cursor: pointer;
         }
       </style>
 
@@ -162,7 +159,6 @@ class TagBox extends HTMLElement {
     } else {
       for (const sugg of suggs) {
         const child = document.createElement('button');
-        child.classList.add('dropdown-item');
         child.setAttribute('type', 'button');
         child.setAttribute('value', sugg.value);
         child.textContent = sugg.label;
@@ -284,7 +280,7 @@ class TagBox extends HTMLElement {
     const key = e.key === 'Unidentified' ? String.fromCharCode(e.which) : e.key;
     if (this.suggestions?.length && ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
       e.preventDefault();
-      const buttons = Array.from(this.dropdownEl.querySelectorAll('button.dropdown-item'));
+      const buttons = Array.from(this.dropdownEl.querySelectorAll('button'));
       let active;
       for (let i = 0; i < buttons.length; i++) {
         if (buttons[i].classList.contains('active')) {
