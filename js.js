@@ -106,7 +106,7 @@ class TagBox extends HTMLElement {
         <div id="dropdown">
         </div>
       </div>
-      `
+    `;
 
     shadow.getElementById('chatInput').addEventListener('keydown', e => { this.onKeydown(e); });
     shadow.getElementById('chatInput').addEventListener('keyup', e => { this.onKeyup(e); });
