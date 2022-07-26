@@ -290,7 +290,7 @@ class TagBox extends HTMLElement {
         }
       }
       if (key === 'Enter') {
-        const user = this.suggestions.find(x => x.value == buttons[active].value);
+        const user = this.suggestions.find(x => x.value == buttons[active]?.value);
         if (user == null) return;
         this.complete(user);
       } else {
