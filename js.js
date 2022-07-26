@@ -137,6 +137,7 @@ class TagBox extends HTMLElement {
     return elems[0];
   }
 
+  // TODO listen to changes and update chatInputEl
   get valueEl() {
     const elems = this.getElementsByTagName('input');
     if (elems.length !== 1) {
