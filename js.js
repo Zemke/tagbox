@@ -173,7 +173,7 @@ class TagBox extends HTMLElement {
       }
       this.dropdownEl.classList.add('show');
       if (!this.dropdownEl.children.length) {
-        this.dropdownEl.children.push('<small>No such user.</small>');
+        this.dropdownEl.innerHTML = '<small>No such user.</small>';
       }
     }
   }
