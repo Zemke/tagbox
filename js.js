@@ -147,8 +147,15 @@ class TagBox extends HTMLElement {
     return elems[0];
   }
 
+  get allSuggestions() {
+    return Array.from(this.suggsEl.getElementsByTagName('option')).map(child => ({
+      label: child.textContent,
+      value: child.getAttribute('value'),
+    }));
+  }
+
   get suggestions() {
-    return Array.from(this.suggsEl.children).map(child => ({
+    return Array.from(this.dropdownEl.getElementsByTagName('option')).map(child => ({
       label: child.textContent,
       value: child.getAttribute('value'),
     }));
@@ -206,7 +213,6 @@ class TagBox extends HTMLElement {
   connectedCallback() {
     setTimeout(() => {
       this.suggestionsSlice = parseInt(this.getAttribute('length')) || TagBox.DEFAULT_SLICE;
-      this.allSuggestions = [...this.suggestions];
       this.styleOffsetsEl();
       this.styleDummyEl();
 
