@@ -269,7 +269,7 @@ class TagBox extends HTMLElement {
     console.log('w', this.dropdownEl.offsetWidth);
     this.dropdownEl.style.left = Math.min(
       this.getOffset(v.substring(0, v.length-q.length)) - this.chatInputEl.scrollLeft,
-      window.innerWidth - (217 + 20)) + 'px';
+      window.innerWidth - ((this.dropdownEl.offsetWidth || 0) + 20)) + 'px';
   }
 
   complete(user, fromClick = false) {
@@ -366,10 +366,10 @@ class TagBox extends HTMLElement {
       this.suggestions = null;
       return;
     }
-    this.styleDropdownEl(q,v);
     this.suggestions = this.allSuggestions
       .filter(({label}) => label.toLowerCase().startsWith(q.toLowerCase()))
       .slice(0, this.suggestionsSlice);
+    this.styleDropdownEl(q,v);
   }
 
   /**
