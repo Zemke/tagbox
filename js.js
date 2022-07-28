@@ -190,7 +190,7 @@ class TagBox extends HTMLElement {
     let html = '';
     for (const tag of tags) {
       const style = Object.keys(tag.style).map(k => k + `: ${tag.style[k]}`).join('; ');
-      html += `<div part="offset" class="offset" style="${style}" data-value="${tag.user.value}"></div>`;
+      html += `<div part="tag" class="offset" style="${style}" data-value="${tag.user.value}"></div>`;
     }
     this.offsetsEl.innerHTML = html;
     for (const opt of this.suggsEl.options) {
