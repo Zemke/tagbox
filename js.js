@@ -96,7 +96,8 @@ class TagBox extends HTMLElement {
       </style>
 
       <div class="chat-container">
-        <input part="input"
+        <input autocomplete="off"
+               part="input"
                type="text"
                name="chat-input"
                id="chatInput">
@@ -265,9 +266,10 @@ class TagBox extends HTMLElement {
       [q, v] = this.getProc();
     }
     if (q == null || v == null) return;
+    console.log('w', this.dropdownEl.offsetWidth);
     this.dropdownEl.style.left = Math.min(
       this.getOffset(v.substring(0, v.length-q.length)) - this.chatInputEl.scrollLeft,
-      window.innerWidth - 200) + 'px';
+      window.innerWidth - (217 + 20)) + 'px';
   }
 
   complete(user, fromClick = false) {
