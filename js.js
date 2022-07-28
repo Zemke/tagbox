@@ -266,10 +266,10 @@ class TagBox extends HTMLElement {
       [q, v] = this.getProc();
     }
     if (q == null || v == null) return;
-    console.log('w', this.dropdownEl.offsetWidth);
+
     this.dropdownEl.style.left = Math.min(
       this.getOffset(v.substring(0, v.length-q.length)) - this.chatInputEl.scrollLeft,
-      window.innerWidth - ((this.dropdownEl.offsetWidth || 0) + 20)) + 'px';
+      this.chatInputEl.offsetWidth - (this.dropdownEl.offsetWidth || 0)) + 'px';
   }
 
   complete(user, fromClick = false) {
