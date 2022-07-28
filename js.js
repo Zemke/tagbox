@@ -165,7 +165,7 @@ class TagBox extends HTMLElement {
         child.setAttribute('type', 'button');
         child.setAttribute('value', sugg.value);
         child.textContent = sugg.label;
-        child.addEventListener('click', e => {
+        child.addEventListener('click', () => {
           this.complete(sugg, true);
         });
         this.dropdownEl.appendChild(child);
