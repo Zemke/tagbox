@@ -24,6 +24,13 @@
     margin-top: .3rem;
   }
 </style>
+<script>
+  window.onload = function () {
+    const tpl = document.getElementById("selects");
+    document.querySelectorAll('zemke-tag-box select')
+      .forEach(elem => elem.innerHTML = tpl.innerHTML);
+  };
+</script>
 </head>
 <body>
 
@@ -33,10 +40,6 @@
   <zemke-tag-box nothing="No such user.">
     <input type="text" name="body" required>
     <select name="tags" multiple>
-      <option value="1">Zemke</option>
-      <option value="2">Mablak</option>
-      <option value="3">Dario</option>
-      <option value="4">Koras</option>
     </select>
   </zemke-tag-box>
   <input type="submit" value="Submit">
@@ -49,10 +52,6 @@
     <zemke-tag-box>
       <input type="text" name="body" required>
       <select name="tags" multiple>
-        <option value="1">Zemke</option>
-        <option value="2">Mablak</option>
-        <option value="3">Dario</option>
-        <option value="4">Koras</option>
       </select>
     </zemke-tag-box>
     <input type="submit" value="Submit">
@@ -61,4 +60,107 @@
 
 </body>
 </html>
+
+<template id="selects">
+  <option value="1">James</option>
+  <option value="2">Robert</option>
+  <option value="3">John</option>
+  <option value="4">Michael</option>
+  <option value="5">David</option>
+  <option value="6">William</option>
+  <option value="7">Richard</option>
+  <option value="8">Joseph</option>
+  <option value="9">Thomas</option>
+  <option value="10">Charles</option>
+  <option value="11">Christopher</option>
+  <option value="12">Daniel</option>
+  <option value="13">Matthew</option>
+  <option value="14">Anthony</option>
+  <option value="15">Mark</option>
+  <option value="16">Donald</option>
+  <option value="17">Steven</option>
+  <option value="18">Paul</option>
+  <option value="19">Andrew</option>
+  <option value="20">Joshua</option>
+  <option value="21">Kenneth</option>
+  <option value="22">Kevin</option>
+  <option value="23">Brian</option>
+  <option value="24">George</option>
+  <option value="25">Timothy</option>
+  <option value="26">Ronald</option>
+  <option value="27">Edward</option>
+  <option value="28">Jason</option>
+  <option value="29">Jeffrey</option>
+  <option value="30">Ryan</option>
+  <option value="31">Jacob</option>
+  <option value="32">Gary</option>
+  <option value="33">Nicholas</option>
+  <option value="34">Eric</option>
+  <option value="35">Jonathan</option>
+  <option value="36">Stephen</option>
+  <option value="37">Larry</option>
+  <option value="38">Justin</option>
+  <option value="39">Scott</option>
+  <option value="40">Brandon</option>
+  <option value="41">Benjamin</option>
+  <option value="42">Samuel</option>
+  <option value="43">Gregory</option>
+  <option value="44">Alexander</option>
+  <option value="45">Frank</option>
+  <option value="46">Patrick</option>
+  <option value="47">Raymond</option>
+  <option value="48">Jack</option>
+  <option value="49">Dennis</option>
+  <option value="50">Jerry</option>
+  <option value="51">Tyler</option>
+  <option value="52">Aaron</option>
+  <option value="53">Jose</option>
+  <option value="54">Adam</option>
+  <option value="55">Nathan</option>
+  <option value="56">Henry</option>
+  <option value="57">Douglas</option>
+  <option value="58">Zachary</option>
+  <option value="59">Peter</option>
+  <option value="60">Kyle</option>
+  <option value="61">Ethan</option>
+  <option value="62">Walter</option>
+  <option value="63">Noah</option>
+  <option value="64">Jeremy</option>
+  <option value="65">Christian</option>
+  <option value="66">Keith</option>
+  <option value="67">Roger</option>
+  <option value="68">Terry</option>
+  <option value="69">Gerald</option>
+  <option value="70">Harold</option>
+  <option value="71">Sean</option>
+  <option value="72">Austin</option>
+  <option value="73">Carl</option>
+  <option value="74">Arthur</option>
+  <option value="75">Lawrence</option>
+  <option value="76">Dylan</option>
+  <option value="77">Jesse</option>
+  <option value="78">Jordan</option>
+  <option value="79">Bryan</option>
+  <option value="80">Billy</option>
+  <option value="81">Joe</option>
+  <option value="82">Bruce</option>
+  <option value="83">Gabriel</option>
+  <option value="84">Logan</option>
+  <option value="85">Albert</option>
+  <option value="86">Willie</option>
+  <option value="87">Alan</option>
+  <option value="88">Juan</option>
+  <option value="89">Wayne</option>
+  <option value="90">Elijah</option>
+  <option value="91">Randy</option>
+  <option value="92">Roy</option>
+  <option value="93">Vincent</option>
+  <option value="94">Ralph</option>
+  <option value="95">Eugene</option>
+  <option value="96">Russell</option>
+  <option value="97">Bobby</option>
+  <option value="98">Mason</option>
+  <option value="99">Philip</option>
+  <option value="100">Louis</option>
+</template>
 
