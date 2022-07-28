@@ -30,9 +30,6 @@ class TagBox extends HTMLElement {
           background-clip: border-box;
           box-shadow: .4rem .9rem 1.5rem #000;
         }
-        .suggestions img {
-          height: 1rem;
-        }
         .offsets {
           position: absolute;
           pointer-events: none;
