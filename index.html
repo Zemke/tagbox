@@ -3,19 +3,19 @@
 <head>
 <script src="js.js"></script>
 <style>
-  .styled zemke-tag-box::part(tag) {
+  .styled zemke-tagbox::part(tag) {
     background-color: rgb(0, 255, 0, .3);
   }
-  .styled zemke-tag-box::part(input) {
+  .styled zemke-tagbox::part(input) {
     background-color: yellow;
     font-family: monospace;
     font-size: 2rem;
     border: 3px dotted blue;
   }
-  .styled zemke-tag-box::part(dropdown-container) {
+  .styled zemke-tagbox::part(dropdown-container) {
     padding: 2rem;
   }
-  .styled zemke-tag-box::part(dropdown-item) {
+  .styled zemke-tagbox::part(dropdown-item) {
     letter-spacing: 1rem;
     color: limegreen;
   }
@@ -27,7 +27,7 @@
 <script>
   window.onload = function () {
     const tpl = document.getElementById("selects");
-    document.querySelectorAll('zemke-tag-box select')
+    document.querySelectorAll('zemke-tagbox select')
       .forEach(elem => elem.innerHTML = tpl.innerHTML);
   };
 </script>
@@ -37,11 +37,11 @@
 <h1>Default</h1>
 
 <form name="ex-from" method="POST" action="/">
-  <zemke-tag-box>
+  <zemke-tagbox>
     <input type="text" name="body" required>
     <select name="tags" multiple>
     </select>
-  </zemke-tag-box>
+  </zemke-tagbox>
   <input type="submit" value="Submit">
 </form>
 
@@ -49,11 +49,11 @@
 
 <div class="styled">
   <form name="styled-from" method="POST" action="/">
-    <zemke-tag-box ci search="levenshtein,80" nothing="Keep typing...">
+    <zemke-tagbox ci search="levenshtein,80" nothing="Keep typing...">
       <input type="text" name="body" required>
       <select name="tags" multiple>
       </select>
-    </zemke-tag-box>
+    </zemke-tagbox>
     <input type="submit" value="Submit">
   </form>
 </div>

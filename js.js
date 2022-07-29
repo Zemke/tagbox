@@ -206,7 +206,7 @@ class TagBox extends HTMLElement {
   get suggsEl() {
     const elems = this.getElementsByTagName('select');
     if (elems.length !== 1) {
-      throw new Error('One and only one HTMLSelectElement in zemke-tag-box required');
+      throw new Error('One and only one HTMLSelectElement in zemke-tagbox required');
     }
     return elems[0];
   }
@@ -214,7 +214,7 @@ class TagBox extends HTMLElement {
   get valueEl() {
     const elems = this.getElementsByTagName('input');
     if (elems.length !== 1) {
-      throw new Error('One and only one HTMLInputElement in zemke-tag-box required');
+      throw new Error('One and only one HTMLInputElement in zemke-tagbox required');
     }
     return elems[0];
   }
@@ -485,5 +485,5 @@ class TagBox extends HTMLElement {
   }
 }
 
-customElements.define('zemke-tag-box', TagBox);
+customElements.define('zemke-tagbox', TagBox);
 
