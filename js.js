@@ -366,7 +366,7 @@ class TagBox extends HTMLElement {
 
   onKeydown(e) {
     const key = e.key === 'Unidentified' ? String.fromCharCode(e.which) : e.key;
-    if (this.suggestions?.length && ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
+    if (this.allSuggestions?.length && ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
       e.preventDefault();
       const buttons = Array.from(this.dropdownEl.querySelectorAll('button'));
       let active;
@@ -377,7 +377,7 @@ class TagBox extends HTMLElement {
         }
       }
       if (key === 'Enter') {
-        const user = this.suggestions.find(x => x.value == buttons[active]?.value);
+        const user = this.allSuggestions.find(x => x.value == buttons[active]?.value);
         if (user == null) return;
         this.complete(user);
       } else {
