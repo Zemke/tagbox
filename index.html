@@ -37,7 +37,7 @@
 <h1>Default</h1>
 
 <form name="ex-from" method="POST" action="/">
-  <zemke-tag-box nothing="No such user.">
+  <zemke-tag-box>
     <input type="text" name="body" required>
     <select name="tags" multiple>
     </select>
@@ -49,7 +49,7 @@
 
 <div class="styled">
   <form name="styled-from" method="POST" action="/">
-    <zemke-tag-box ci search="levenshtein,80">
+    <zemke-tag-box ci search="levenshtein,80" nothing="Keep typing...">
       <input type="text" name="body" required>
       <select name="tags" multiple>
       </select>
