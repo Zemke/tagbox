@@ -1,7 +1,7 @@
 {
   "name": "@zemke/tagbox",
   "version": "1.0.0",
-  "description": "Zero dependency Web Component single-line input field (no contenteditable) with ability to enter tags.",
+  "description": "Zero dependency Web Component input field (no contenteditable) supporting tags. Backed by standard HTML elements.",
   "main": "js.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
