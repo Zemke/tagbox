@@ -366,31 +366,35 @@ class TagBox extends HTMLElement {
 
   onKeydown(e) {
     const key = e.key === 'Unidentified' ? String.fromCharCode(e.which) : e.key;
-    if (this.allSuggestions?.length && ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
-      e.preventDefault();
-      const buttons = Array.from(this.dropdownEl.querySelectorAll('button'));
-      let active;
-      for (let i = 0; i < buttons.length; i++) {
-        if (buttons[i].classList.contains('active')) {
-          active = i;
-          break;
-        }
+    if (!['ArrowDown', 'ArrowUp', 'Tab', 'Enter'].includes(key)) {
+      return;
+    }
+    const buttons = Array.from(this.dropdownEl.querySelectorAll('button'));
+    if (!buttons.length) {
+      return;
+    }
+    e.preventDefault();
+    let active;
+    for (let i = 0; i < buttons.length; i++) {
+      if (buttons[i].classList.contains('active')) {
+        active = i;
+        break;
       }
-      if (key === 'Enter') {
-        const user = this.allSuggestions.find(x => x.value == buttons[active]?.value);
-        if (user == null) return;
-        this.complete(user);
+    }
+    if (key === 'Enter') {
+      const user = this.allSuggestions.find(x => x.value == buttons[active]?.value);
+      if (user == null) return;
+      this.complete(user);
+    } else {
+      if (active == null) {
+        buttons[0].classList.add('active');
       } else {
-        if (active == null) {
-          buttons[0].classList.add('active');
+        const up = key === 'ArrowUp' || (e.shiftKey && key === 'Tab')
+        buttons[active].classList.remove('active');
+        if (up && active == 0) {
+          buttons[buttons.length-1].classList.add('active');
         } else {
-          const up = key === 'ArrowUp' || (e.shiftKey && key === 'Tab')
-          buttons[active].classList.remove('active');
-          if (up && active == 0) {
-            buttons[buttons.length-1].classList.add('active');
-          } else {
-            buttons[(active + (up ? -1 : +1)) % buttons.length].classList.add('active');
-          }
+          buttons[(active + (up ? -1 : +1)) % buttons.length].classList.add('active');
         }
       }
     }
