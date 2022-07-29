@@ -1,5 +1,77 @@
 class TagBox extends HTMLElement {
 
+  static Matcher = class {
+
+    static FALLBACK = 'start';
+    static SEARCHES = [this.FALLBACK, 'infix', 'levenshtein'];
+
+    constructor(q, ci, fn) {
+      this.q = ci ? q.toLowerCase() : q;
+      this.ci = ci;
+
+      if (TagBox.Matcher.SEARCHES.indexOf(fn[0]) === -1) {
+        console.warn(
+          `Invalid search "${fn[0]}". Valid searches are ${TagBox.Matcher.SEARCHES.join(', ')}. Falling back to "${TagBox.Matcher.FALLBACK}".`);
+        fn = [TagBox.Matcher.FALLBACK, ...fn.slice(1)];
+      }
+      this.fn = fn;
+    }
+
+    static parseSearchAttr(attr) {
+      return !attr ? [TagBox.Matcher.FALLBACK] : attr.split(',').map(s => s.trim());
+    }
+
+    perform(s) {
+      return this['_' + this.fn[0]](s, ...this.fn.slice(1));
+    }
+
+    _start(s) {
+      return this._lc(s).startsWith(this.q);
+    }
+
+    _infix(s) {
+      return this._lc(s).indexOf(this.q) !== -1;
+    }
+
+    _levenshtein(s, b) {
+      if (this.q === '') {
+        return true;
+      }
+      s = this._lc(s);
+      const [sh, ln] = [s, this.q]
+        .sort((a, b) => a.length - b.length)
+      if (ln.length === 0) {
+        return 1.0;
+      }
+      const costs = new Array();
+      for (let i = 0; i <= ln.length; i++) {
+        let lastValue = i;
+        for (let j = 0; j <= sh.length; j++) {
+          if (i == 0) {
+            costs[j] = j;
+            continue;
+          }
+          if (j > 0) {
+            let newValue = costs[j - 1];
+            if (ln.charAt(i - 1) != sh.charAt(j - 1))
+              newValue = Math.min(Math.min(newValue, lastValue),
+                costs[j]) + 1;
+            costs[j - 1] = lastValue;
+            lastValue = newValue;
+          }
+        }
+        if (i > 0) {
+          costs[sh.length] = lastValue;
+        }
+      }
+      const v = (ln.length - costs[sh.length]) / parseFloat(ln.length);
+      return v >= parseFloat(b / 100);
+    }
+
+    _lc(s) {
+      return this.ci ? s.toLowerCase() : s;
+    }
+  };
   static DELIMITER = /^[a-z0-9-_]*$/i;
   static DEFAULT_SLICE = 4;
 
@@ -341,8 +413,10 @@ class TagBox extends HTMLElement {
     const {value, scrollLeft} = this.chatInputEl;
     const matchAll = Array.from(value.matchAll(/(?:^|[^a-z0-9-_])@([a-z0-9-_]+)/ig));
     const matches = [];
+    const ci = this.hasAttribute('ci');
     for (const m of matchAll) {
-      const user = this.allSuggestions.find(u => u.label.toLowerCase() === m[1].toLowerCase());
+      const user = this.allSuggestions.find(u =>
+        ci ? (u.label.toLowerCase() === m[1].toLowerCase()) : (u.label === m[1]));
       if (user != null) {
         matches.push({ index: m.index + m[0].indexOf('@'), user });
       }
@@ -372,8 +446,13 @@ class TagBox extends HTMLElement {
       this.suggestions = null;
       return;
     }
+
+    const matcher = new TagBox.Matcher(
+      q,
+      this.hasAttribute('ci'),
+      TagBox.Matcher.parseSearchAttr(this.getAttribute('search')));
     this.suggestions = this.allSuggestions
-      .filter(({label}) => label.toLowerCase().startsWith(q.toLowerCase()))
+      .filter(({label}) => matcher.perform(label))
       .slice(0, this.suggestionsSlice);
     this.styleDropdownEl(q,v);
   }
