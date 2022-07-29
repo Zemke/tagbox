@@ -18,7 +18,10 @@
       "unix"
     ],
     "no-console": [
-      "error"
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
     ]
   }
 }
