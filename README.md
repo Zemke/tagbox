@@ -52,3 +52,9 @@ Bonus tip if you're using it within a Bootstrap `.input-group` I found this to w
 }
 ```
 
+### Spacings change
+
+If
+`marginLeft`, `borderLeftWidth`, `borderRightWidth`, `paddingLeft`, `paddingRight` or `width`
+change without the input element itself changing its dimensions, the tags might be off.
+
