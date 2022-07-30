@@ -33,7 +33,7 @@ class TagBox extends HTMLElement {
       return this._lc(s).indexOf(this.q) !== -1;
     }
 
-    _levenshtein(s, b) {
+    _levenshtein(s, b=80) {
       if (this.q === '') {
         return true;
       }
