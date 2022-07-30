@@ -470,7 +470,7 @@ class TagBox extends HTMLElement {
       this.hasAttribute('ci'),
       TagBox.Matcher.parseSearchAttr(this.getAttribute('search')));
     this.suggestions = this.allSuggestions
-      .filter(({label}) => matcher.perform(label))
+      .filter(({label}) => matcher.perform(label.trim()))
       .slice(0, this.suggestionsSlice);
     this.styleDropdownEl(q,v);
   }
