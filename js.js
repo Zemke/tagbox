@@ -96,6 +96,7 @@ class TagBox extends HTMLElement {
         }
         .chat-container {
           position: relative;
+          display: inline-block;
         }
         .suggestions {
           min-width: auto;
