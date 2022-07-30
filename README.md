@@ -10,17 +10,13 @@ TODO image or even gif
 
 The input field that the user types in is in a Shadow DOM.
 Therefore you can't add attributes it like you're used to.
-You could do so if you're willing to do it with JavaScript.
 At the end of the day `zemke-tagbox` is not an input field.
+You could do so if you're willing to do it with JavaScript like this:
 
-#### `disabled`
-
-If you want to disable the input element, I suggest to toggle show and hide with another disabled placeholder input field.
-To be extra sure you might also want to disable the backing `input` and `select` fields.
-That you can do as you're used to, though.
-Here's an example with Angular:
-
-TODO example from CWT with Angular
+```js
+document.querySelector('zemke-tagbox')
+  .chatInputEl.setAttribute('placeholder', "Enter your message here")
+```
 
 ### `styling`
 
