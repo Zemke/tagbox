@@ -337,8 +337,11 @@ class TagBox extends HTMLElement {
     } = window.getComputedStyle(this.chatInputEl);
     this.offsetsEl.style.width =
       parseFloat(width)
-      + parseFloat(borderLeftWidth)
       - parseFloat(paddingRight)
+      - parseFloat(paddingLeft)
+      - parseFloat(borderRightWidth)
+      - parseFloat(borderLeftWidth)
+      + 1
       + 'px';
     this.offsetsEl.style.left =
       parseFloat(marginLeft)
