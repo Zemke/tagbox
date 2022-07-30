@@ -41,7 +41,10 @@ The number of suggestions to show. Default is 4.
 Here's an example of all attributes in use:
 
 ```html
-<zemke-tagbox length="6" ci nothing="No such entry." search="infix">
+<zemke-tagbox length="6"
+              ci
+              nothing="No such entry."
+              search="infix">
 ...
 ```
 
