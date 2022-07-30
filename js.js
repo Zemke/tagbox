@@ -94,9 +94,13 @@ class TagBox extends HTMLElement {
           pointer-events: none;
           white-space: pre;
         }
-        .chat-container {
+        :host {
           position: relative;
           display: inline-block;
+        }
+        #chatInput {
+          width: 100%;
+          box-sizing: border-box;
         }
         .suggestions {
           min-width: auto;
@@ -169,18 +173,16 @@ class TagBox extends HTMLElement {
         }
       </style>
 
-      <div class="chat-container">
-        <input autocomplete="off"
-               part="input"
-               type="text"
-               name="chat-input"
-               id="chatInput">
-        <div id="offsets" class="offsets">
-        </div>
-        <div id="dummy" class="dummy">
-        </div>
-        <div id="dropdown" part="dropdown-container">
-        </div>
+      <input autocomplete="off"
+             part="input"
+             type="text"
+             name="chat-input"
+             id="chatInput">
+      <div id="offsets" class="offsets">
+      </div>
+      <div id="dummy" class="dummy">
+      </div>
+      <div id="dropdown" part="dropdown-container">
       </div>
     `;
 
