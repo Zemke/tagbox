@@ -65,7 +65,7 @@ The demo includes a individually styled version of the Web Component.
 
 ## Caveats
 
-### attributes
+### Attributes
 
 The input field that the user types in is in a Shadow DOM.
 Therefore you can't add attributes it like you're used to.
