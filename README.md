@@ -8,6 +8,8 @@ TODO JSFiddle or something would be nice.
 ## Usage
 
 ```html
+<script src="js.js"></script>
+
 <zemke-tagbox>
   <input type="text" name="message">
   <select multiple name="tags">
