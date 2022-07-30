@@ -223,14 +223,14 @@ class TagBox extends HTMLElement {
 
   get allSuggestions() {
     return Array.from(this.suggsEl.getElementsByTagName('option')).map(child => ({
-      label: child.textContent,
+      label: child.textContent.trim(),
       value: child.getAttribute('value'),
     }));
   }
 
   get suggestions() {
     return Array.from(this.dropdownEl.getElementsByTagName('option')).map(child => ({
-      label: child.textContent,
+      label: child.textContent.trim(),
       value: child.getAttribute('value'),
     }));
   }
@@ -470,7 +470,7 @@ class TagBox extends HTMLElement {
       this.hasAttribute('ci'),
       TagBox.Matcher.parseSearchAttr(this.getAttribute('search')));
     this.suggestions = this.allSuggestions
-      .filter(({label}) => matcher.perform(label.trim()))
+      .filter(({label}) => matcher.perform(label))
       .slice(0, this.suggestionsSlice);
     this.styleDropdownEl(q,v);
   }
