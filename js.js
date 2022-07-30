@@ -116,6 +116,7 @@ class TagBox extends HTMLElement {
           top: .2rem;
           bottom: .2rem;
           z-index: 99;
+          padding-right: 2px;
           border-top-left-radius: 1rem;
           border-bottom-left-radius: 1rem;
           border-top-right-radius: .5rem;
@@ -323,13 +324,26 @@ class TagBox extends HTMLElement {
   }
 
   styleOffsetsEl() {
-    const {width, height} = this.chatInputEl.getBoundingClientRect();
-    const {paddingLeft, paddingRight} = window.getComputedStyle(this.chatInputEl);
-    this.paddingLeft = parseFloat(paddingLeft);
+    const {height} = this.chatInputEl.getBoundingClientRect();
+    const {
+      marginLeft,
+      borderLeftWidth,
+      borderRightWidth,
+      paddingLeft,
+      paddingRight,
+      width,
+    } = window.getComputedStyle(this.chatInputEl);
     this.offsetsEl.style.width =
-      width - this.paddingLeft - parseFloat(paddingRight) + 'px';
-    this.offsetsEl.style.marginLeft = paddingLeft;
-    this.offsetsEl.style.marginRight = paddingRight;
+      parseFloat(width)
+      + parseFloat(borderLeftWidth)
+      - parseFloat(paddingRight)
+      + 'px';
+    this.offsetsEl.style.left =
+      parseFloat(marginLeft)
+      + parseFloat(paddingLeft)
+      + parseFloat(borderLeftWidth)
+      - 1
+      + 'px';
     this.offsetsEl.style.height = height + 'px';
   }
 
@@ -437,9 +451,8 @@ class TagBox extends HTMLElement {
 
   getOffset(v) {
     this.dummyEl.textContent = v;
-    this.dummyEl.style.paddingLeft = `${this.paddingLeft}px`;
-    // scrollLeft is subtracted in the result, it's done here just for visual reasons when debugging
-    this.dummyEl.style.marginLeft = `-${this.chatInputEl.scrollLeft}px`;
+    // scrollLeft is subtracted in the result, uncomment for debugging purposes.
+    // this.dummyEl.style.marginLeft = `-${this.chatInputEl.scrollLeft}px`;
     const res = this.dummyEl.getBoundingClientRect().width;
     this.dummyEl.innerHTML = '';
     return res;
