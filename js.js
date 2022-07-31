@@ -280,6 +280,7 @@ class TagBox extends HTMLElement {
     for (const opt of this.suggsEl.options) {
       opt.selected = this.tags.map(t => String(t.user.value)).indexOf(String(opt.value)) !== -1;
     }
+    this.suggsEl.dispatchEvent(new Event('change'));
   }
 
   getEl(id) {
@@ -314,7 +315,9 @@ class TagBox extends HTMLElement {
       });
 
       this.valueEl.addEventListener('input', e => {
-        this.chatInputEl.value = e.target.value;
+        if (this.chatInputEl.value !== e.target.value) {
+          this.chatInputEl.value = e.target.value;
+        }
         this.onInput();
       })
     });
@@ -428,7 +431,10 @@ class TagBox extends HTMLElement {
   }
 
   onInput() {
-    this.valueEl.value = this.chatInputEl.value;
+    if (this.valueEl.value !== this.chatInputEl.value) {
+      this.valueEl.value = this.chatInputEl.value;
+      this.valueEl.dispatchEvent(new Event('input'));
+    }
     this.suggest();
     setTimeout(() => this.updateRecipients());
   }
