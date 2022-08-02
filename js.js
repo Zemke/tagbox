@@ -77,7 +77,7 @@ class TagBox extends HTMLElement {
 
   scrollLeft = 0;
   documentClickListener = e => {
-    e.target === this.chatInputEl || e.target === this
+    e.composedPath()[0] === this.chatInputEl
       ? this.suggest()
       : (this.suggestions = null);
   };
