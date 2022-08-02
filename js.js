@@ -149,6 +149,7 @@ class TagBox extends HTMLElement {
         }
         #dropdown small {
           padding: .25rem .4rem;
+          white-space: nowrap;
         }
         #dropdown.show {
           display: block;
