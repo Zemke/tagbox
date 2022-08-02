@@ -394,6 +394,13 @@ class TagBox extends HTMLElement {
     }
     const buttons = Array.from(this.dropdownEl.querySelectorAll('button'));
     if (!buttons.length) {
+      if ('Enter' === key) {
+        const form = this.closest('form');
+        if (form) {
+          form.submit();
+          return;
+        }
+      }
       return;
     }
     e.preventDefault();
