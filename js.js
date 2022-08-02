@@ -433,7 +433,7 @@ class TagBox extends HTMLElement {
 
   onKeyup(e) {
     const key = e.key === 'Unidentified' ? String.fromCharCode(e.which) : e.key;
-    if (key.length > 1 && !['ArrowDown', 'ArrowUp', 'Tab', 'Enter', 'Backspace', 'Delete'].includes(key)) {
+    if (key.length > 1 && !['ArrowDown', 'ArrowUp', 'Tab', 'Enter', 'Backspace', 'Delete', 'Shift'].includes(key)) {
       this.suggest();
     }
   }
