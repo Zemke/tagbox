@@ -398,7 +398,7 @@ class TagBox extends HTMLElement {
       if ('Enter' === key) {
         const form = this.closest('form');
         if (form) {
-          form.submit();
+          form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
           return;
         }
       }
