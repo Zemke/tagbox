@@ -1,6 +1,6 @@
 {
   "name": "@zemke/tagbox",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Zero dependency Web Component input field (no contenteditable) supporting tags. Backed by standard HTML elements.",
   "main": "js.js",
   "scripts": {
