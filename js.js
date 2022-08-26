@@ -381,6 +381,7 @@ class TagBox extends HTMLElement {
       v.substring(0, caret - q.length)
       + user.label
       + inpElem.value.substring(caret);
+    inpElem.dispatchEvent(new Event('input'));
     this.suggestions = null;
     fromClick && inpElem.focus();
     inpElem.selectionStart = caret - q.length + user.label.length;
