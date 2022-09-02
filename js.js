@@ -77,7 +77,7 @@ class TagBox extends HTMLElement {
 
   scrollLeft = 0;
   documentClickListener = e => {
-    e.composedPath()[0] === this.chatInputEl
+    e.composedPath()[0] === this.zemkeInput
       ? this.suggest()
       : (this.suggestions = null);
   };
@@ -98,7 +98,7 @@ class TagBox extends HTMLElement {
           position: relative;
           display: inline-block;
         }
-        #chatInput {
+        #zemkeInput {
           width: 100%;
           box-sizing: border-box;
         }
@@ -177,8 +177,8 @@ class TagBox extends HTMLElement {
       <input autocomplete="off"
              part="input"
              type="text"
-             name="chat-input"
-             id="chatInput">
+             name="zemke-input"
+             id="zemkeInput">
       <div id="offsets" class="offsets">
       </div>
       <div id="dummy" class="dummy">
@@ -187,13 +187,13 @@ class TagBox extends HTMLElement {
       </div>
     `;
 
-    shadow.getElementById('chatInput').addEventListener('keydown', e => { this.onKeydown(e); });
-    shadow.getElementById('chatInput').addEventListener('keyup', e => { this.onKeyup(e); });
-    shadow.getElementById('chatInput').addEventListener('input', e => { this.onInput(e); });
+    shadow.getElementById('zemkeInput').addEventListener('keydown', e => { this.onKeydown(e); });
+    shadow.getElementById('zemkeInput').addEventListener('keyup', e => { this.onKeyup(e); });
+    shadow.getElementById('zemkeInput').addEventListener('input', e => { this.onInput(e); });
   }
 
-  get chatInputEl() {
-    return this.getEl('chatInput');
+  get zemkeInput() {
+    return this.getEl('zemkeInput');
   }
 
   get offsetsEl() {
@@ -304,10 +304,10 @@ class TagBox extends HTMLElement {
           this.styleDropdownEl();
         });
       });
-      this.resizeObserver.observe(this.chatInputEl);
+      this.resizeObserver.observe(this.zemkeInput);
 
       setInterval(() => {
-        const scrollLeft = this.chatInputEl.scrollLeft;
+        const scrollLeft = this.zemkeInput.scrollLeft;
         if (scrollLeft === this.scrollLeft) return;
         window.requestAnimationFrame(() => {
           this.updateRecipients();
@@ -316,8 +316,8 @@ class TagBox extends HTMLElement {
       });
 
       this.valueEl.addEventListener('input', e => {
-        if (this.chatInputEl.value !== e.target.value) {
-          this.chatInputEl.value = e.target.value;
+        if (this.zemkeInput.value !== e.target.value) {
+          this.zemkeInput.value = e.target.value;
         }
         this.onInput();
       })
@@ -330,7 +330,7 @@ class TagBox extends HTMLElement {
   }
 
   styleOffsetsEl() {
-    const {height} = this.chatInputEl.getBoundingClientRect();
+    const {height} = this.zemkeInput.getBoundingClientRect();
     const {
       marginLeft,
       borderLeftWidth,
@@ -338,7 +338,7 @@ class TagBox extends HTMLElement {
       paddingLeft,
       paddingRight,
       width,
-    } = window.getComputedStyle(this.chatInputEl);
+    } = window.getComputedStyle(this.zemkeInput);
     this.offsetsEl.style.width =
       parseFloat(width)
       - parseFloat(paddingRight)
@@ -357,7 +357,7 @@ class TagBox extends HTMLElement {
   }
 
   styleDummyEl() {
-    const {fontSize, fontFamily} = window.getComputedStyle(this.chatInputEl);
+    const {fontSize, fontFamily} = window.getComputedStyle(this.zemkeInput);
     this.dummyEl.style.fontSize = fontSize;
     this.dummyEl.style.fontFamily = fontFamily;
   }
@@ -370,12 +370,12 @@ class TagBox extends HTMLElement {
     if (q == null || v == null) return;
 
     this.dropdownEl.style.left = Math.min(
-      this.getOffset(v.substring(0, v.length-q.length)) - this.chatInputEl.scrollLeft,
-      this.chatInputEl.offsetWidth - (this.dropdownEl.offsetWidth || 0)) + 'px';
+      this.getOffset(v.substring(0, v.length-q.length)) - this.zemkeInput.scrollLeft,
+      this.zemkeInput.offsetWidth - (this.dropdownEl.offsetWidth || 0)) + 'px';
   }
 
   complete(user, fromClick = false) {
-    const inpElem = this.chatInputEl;
+    const inpElem = this.zemkeInput;
     const [q, v, caret] = this.getProc();
     inpElem.value =
       v.substring(0, caret - q.length)
@@ -440,8 +440,8 @@ class TagBox extends HTMLElement {
   }
 
   onInput() {
-    if (this.valueEl.value !== this.chatInputEl.value) {
-      this.valueEl.value = this.chatInputEl.value;
+    if (this.valueEl.value !== this.zemkeInput.value) {
+      this.valueEl.value = this.zemkeInput.value;
       this.valueEl.dispatchEvent(new Event('input'));
     }
     this.suggest();
@@ -449,7 +449,7 @@ class TagBox extends HTMLElement {
   }
 
   updateRecipients() {
-    const {value, scrollLeft} = this.chatInputEl;
+    const {value, scrollLeft} = this.zemkeInput;
     const matchAll = Array.from(value.matchAll(/(?:^|[^a-z0-9-_])@([a-z0-9-_]+)/ig));
     const matches = [];
     const ci = this.hasAttribute('ci');
@@ -472,7 +472,7 @@ class TagBox extends HTMLElement {
   getOffset(v) {
     this.dummyEl.textContent = v;
     // scrollLeft is subtracted in the result, uncomment for debugging purposes.
-    // this.dummyEl.style.marginLeft = `-${this.chatInputEl.scrollLeft}px`;
+    // this.dummyEl.style.marginLeft = `-${this.zemkeInput.scrollLeft}px`;
     const res = this.dummyEl.getBoundingClientRect().width;
     this.dummyEl.innerHTML = '';
     return res;
@@ -504,7 +504,7 @@ class TagBox extends HTMLElement {
    *   until associated @ sign and the caret index.
    */
   getProc() {
-    const {selectionStart, value} = this.chatInputEl;
+    const {selectionStart, value} = this.zemkeInput;
     const v = value.substring(0, selectionStart);
     if (v.indexOf('@') === -1) return [null, v, selectionStart];
     const rev = v.split("").reverse()
