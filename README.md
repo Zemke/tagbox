@@ -1,5 +1,7 @@
 # Tagbox
 
+[![npm version](https://badge.fury.io/js/@zemke%2Ftagbox.svg)](https://www.npmjs.com/package/@zemke/tagbox)
+
 Zero dependency Web Component single-line input field (no contenteditable) with ability to enter tags. 
 
 [JSFiddle DEMO](https://jsfiddle.net/Zemke/cL7ws265/)
@@ -12,6 +14,10 @@ Zero dependency Web Component single-line input field (no contenteditable) with 
 * Data backed by sane `input` and `select` elements
 * Works well with React, Angular, etc.
 * Battle-proven in production environments
+
+```
+npm i @zemke/tagbox
+```
 
 ## Usage
 
