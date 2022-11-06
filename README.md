@@ -2,8 +2,16 @@
 
 Zero dependency Web Component single-line input field (no contenteditable) with ability to enter tags. 
 
-TODO JSFiddle or something would be nice.
-[DEMO](https://store.zemke.io/tagbox.html)
+[JSFiddle DEMO](https://jsfiddle.net/Zemke/cL7ws265/)
+
+* Navigate suggestions with <kbd>tab</kbd>, <kbd>shift</kbd>+<kbd>tab</kbd> and arrow keys <kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd><kbd>←</kbd>
+* Works with copy-pasted text
+* Responsive all the way
+* Customizable in looks and the way it works
+* Plain old HTML and JavaScript, no magic
+* Data backed by sane `input` and `select` elements
+* Works well with React, Angular, etc.
+* Battle-proven in production environments
 
 ## Usage
 
